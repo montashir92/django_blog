@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Category-Post | Blog{% endblock %}
+
+{% block content %}
+
+<div class="slider display-table center-text">
+    <h1 class="title display-table-cell"><b>Category : {{ cat.name }}</b></h1>
+</div><!-- slider -->
+
+<section class="blog-area section">
+    <div class="container">
+
+        <div class="row">
+        {% for p in post %}	
+            <div class="col-lg-4 col-md-6">
+                <div class="card h-100">
+                    <div class="single-post post-style-1">
+
+                        <div class="blog-image"><img src="{{ p.image.url }}" height="200"alt="Blog Image"></div>
+
+                        <a class="avatar" href="#"><img src="{% static 'images/icons8-team-355979.jpg' %}" alt="Profile Image"></a>
+
+                        <div class="blog-info">
+
+                            <h4 class="title"><a href="{% url 'single_post' id=p.id %}"><b>{{ p.title }}</b></a></h4>
+
+                            <h5 class="badge badge-info"><a href="{% url 'topic' name=p.category.name %}">{{ p.category.name }}</a></h5>
+
+								<p>{{ p.created_at }}</p>
+
+                        </div><!-- blog-info -->
+                    </div><!-- single-post -->
+                </div><!-- card -->
+            </div><!-- col-lg-4 col-md-6 -->
+        {% endfor %}	
+            
+
+        </div><!-- row -->
+
+        <a class="load-more-btn" href="#"><b>LOAD MORE</b></a>
+
+    </div><!-- container -->
+</section><!-- section -->
+
+{% endblock %}

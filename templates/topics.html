@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}All topics | Blog{% endblock %}
+
+{% block content %}
+
+<div class="slider display-table center-text">
+    <h1 class="title display-table-cell"><b>View Categoey</b></h1>
+</div><!-- slider -->
+
+<section class="blog-area section">
+    <div class="container">
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+        <div class="row">
+
+            
+                
+            
+            <div class="col-md-8">
+                {% if request.user.is_authenticated %} <!--Only Login User access-->
+                    {% if request.user.is_staff or request.user.is_superuser %} <!--Only Superuser access-->
+                    <a href="{% url 'createTopic' %}" class="btn btn-primary">Add New Category</a>
+                    {% endif %}
+                    
+                {% endif %}
+
+                    <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">Topics</th>
+                                    <th class="text-center">Action</th>
+                                    {% if request.user.is_authenticated %} <!--Only Login User access-->
+                                        {% if request.user.is_staff or request.user.is_superuser %}<!--Only Superuser access-->
+                                        <th class="text-center">Action</th>
+                                        {% endif %}
+                                        
+                                    {% endif %}
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for t in topic %}
+                                <tr>
+                                    <td><a href="{% url 'topic' name=t.name %}">{{ t.name }}</a></td>
+                                    <td>
+                                        
+                                        {% if request.user.is_authenticated %} <!--Only Login User access-->
+                                            {% if request.user.is_staff or request.user.is_superuser %}<!--Only Superuser access-->
+                                            <a href="" class="btn btn-primary btn-sm">Edit</a>
+                                            <a onclick="return confirm('Are you sure to Delete ?')" href="" class="btn btn-danger btn-sm">Delete</a>
+                                            {% endif %}
+                                            
+                                        {% endif %}
+                                        
+                                    </td>
+                                </tr>
+                            {% endfor %}	
+                            </tbody>
+                        </table> 
+
+            </div> 
+
+
+        </div><!-- row -->
+
+        <a class="load-more-btn" href="#"><b>LOAD MORE</b></a>
+
+    </div><!-- container -->
+</section><!-- section -->
+
+{% endblock %}

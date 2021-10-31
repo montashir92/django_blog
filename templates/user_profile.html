@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Home | Blog{% endblock %}
+
+{% block content %}
+
+<div class="slider display-table center-text">
+		<h1 class="title display-table-cell"><b>{{ user.name.get_full_name }}</b></h1>
+	</div><!-- slider -->
+
+	<section class="blog-area section">
+		<div class="container">
+
+			<div class="row">
+
+				<div class="col-lg-8 col-md-12">
+					{% if messages %}
+						<ul class="messages">
+							{% for message in messages %}
+							<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+							{% endfor %}
+						</ul>
+					{% endif %}
+					<div class="row">
+						
+					<a href="{% url 'create' %}" class="btn btn-primary">Add Article</a>
+						
+					
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th>Title</th>
+									<th>Date</th>
+									<th>Action</th>
+								</tr>
+							</thead>
+							<tbody>
+							{% for p in post %}
+								<tr>
+									<td>{{ p.title }}</td>
+									<td>{{ p.created_at }}</td>
+									<td>
+										<a href="{% url 'update' id=p.id %}" class="btn btn-primary btn-sm">Edit</a>
+										<a onclick="return confirm('Are you sure to Delete ?')" href="{% url 'delete' id=p.id %}" class="btn btn-danger btn-sm">Delete</a>
+									</td>
+								</tr>
+							{% endfor %}	
+							</tbody>
+						</table>
+
+					</div><!-- row -->
+
+				</div><!-- col-lg-8 col-md-12 -->
+
+				<div class="col-lg-4 col-md-12 ">
+
+					<div class="single-post info-area ">
+
+						<div class="about-area">
+							<img src="{{ user.profile_picture.url }}" class="rounded-circle p-5" width="50" height="250" alt="image">
+							<h4 class="title"><b>{{ user.name.get_full_name }}</b></h4>
+							<p>{{ user.details }}</p>
+						</div>
+
+						<div class="subscribe-area">
+
+							<h4 class="title"><b>SUBSCRIBE</b></h4>
+							<div class="input-area">
+								<form>
+									<input class="email-input" type="text" placeholder="Enter your email">
+									<button class="submit-btn" type="submit"><i class="ion-ios-email-outline"></i></button>
+								</form>
+							</div>
+
+						</div><!-- subscribe-area -->
+
+						<div class="tag-area">
+
+							<h4 class="title"><b>TAG CLOUD</b></h4>
+							<ul>
+								<li><a href="#">Manual</a></li>
+								<li><a href="#">Liberty</a></li>
+								<li><a href="#">Recomendation</a></li>
+								<li><a href="#">Interpritation</a></li>
+								<li><a href="#">Manual</a></li>
+								<li><a href="#">Liberty</a></li>
+								<li><a href="#">Recomendation</a></li>
+								<li><a href="#">Interpritation</a></li>
+							</ul>
+
+						</div><!-- subscribe-area -->
+
+					</div><!-- info-area -->
+
+				</div><!-- col-lg-4 col-md-12 -->
+
+			</div><!-- row -->
+
+		</div><!-- container -->
+	</section><!-- section -->
+
+
+
+{% endblock %}

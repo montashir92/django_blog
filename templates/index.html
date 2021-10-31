@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Home | Blog{% endblock %}
+
+{% block content %}
+
+<section class="blog-area section">
+		<div class="container">
+
+			<div class="row">
+			{% for p in post %}	
+
+				<div class="col-lg-4 col-md-6">
+					<div class="card h-100">
+						<div class="single-post post-style-1">
+
+							<div class="blog-image"><img src="{{ p.image.url }}" height="200"alt="Blog Image"></div>
+
+							<a class="avatar" href="{% url 'author' name=p.article_author.name.username %}"><img src="{{ p.article_author.profile_picture.url }}" alt="Profile Image"></a>
+							<h6><a href="{% url 'author' name=p.article_author.name.username %}"><strong><i>{{ p.article_author.name.get_full_name }}</i></strong></a></h6>
+
+							<div class="blog-info">
+
+								<h4 class="title"><a href="{% url 'single_post' id=p.id %}"><b>{{ p.title }}</b></a></h4>
+								<h5 class="badge badge-info"><a href="{% url 'topic' name=p.category.name %}">{{ p.category.name }}</a></h5>
+
+								<p>{{ p.created_at }}</p>
+
+							</div><!-- blog-info -->
+						</div><!-- single-post -->
+					</div><!-- card -->
+				</div><!-- col-lg-4 col-md-6 -->
+
+			{% endfor %}		
+
+			</div><!-- row -->
+
+			<a class="load-more-btn" href="#"><b>LOAD MORE</b></a>
+
+		</div><!-- container -->
+	</section><!-- section -->
+
+	<div class="conatiner">
+		<div class="col-md-6 align-middle">
+			<div class="pagination">
+				<span class="step-links">
+					{% if post.has_previous %}
+						<a href="?page=1">&laquo; first</a>
+						<a href="?page={{ contacts.previous_page_number }}">previous</a>
+					{% endif %}
+			
+					<span class="current">
+						Page {{ post.number }} of {{ post.paginator.num_pages }}.
+					</span>
+			
+					{% if post.has_next %}
+						<a href="?page={{ post.next_page_number }}">next</a>
+						<a href="?page={{ post.paginator.num_pages }}">last &raquo;</a>
+					{% endif %}
+				</span>
+			</div>
+		</div>
+	</div>
+    
+{% endblock %}
